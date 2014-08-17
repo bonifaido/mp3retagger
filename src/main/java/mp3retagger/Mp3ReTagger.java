@@ -47,10 +47,10 @@ public class Mp3ReTagger {
             if (new File(tmpFileName).renameTo(file)) {
                 System.out.println("Successfully re-tagged " + file.getName());
             } else {
-                System.out.println("Couldn't move ret-tagged file to original place");
+                System.out.println("Couldn't move re-tagged file back to it's original place");
             }
         } else {
-            System.out.println("Couldn't guess artist + title for " + file.getName());
+            System.out.println("Couldn't guess artist/title for " + file.getName());
         }
     }
 
@@ -66,7 +66,6 @@ public class Mp3ReTagger {
         ID3v2 originalId3Tag = mp3File.getId3v2Tag();
         if (!Objects.equals(originalId3Tag.getArtist(), guessedId3Tag.getArtist())) return true;
         if (!Objects.equals(originalId3Tag.getTitle(), guessedId3Tag.getTitle())) return true;
-        if (!isNullOrEmpty(originalId3Tag.getComment())) return true;
         return false;
     }
 
@@ -89,7 +88,6 @@ public class Mp3ReTagger {
             ID3v23Tag id3v23Tag = new ID3v23Tag();
             id3v23Tag.setArtist(artist);
             id3v23Tag.setTitle(title);
-            id3v23Tag.setComment(String.valueOf(System.currentTimeMillis()));
 
             return id3v23Tag;
         }
