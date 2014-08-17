@@ -38,6 +38,10 @@ public class Mp3ReTagger {
                 return;
             }
 
+            System.out.println("Updating file with"
+                    + "  artist: " + guessedId3Tag.getArtist()
+                    + "  title: " + guessedId3Tag.getTitle());
+
             mp3File.removeId3v1Tag();
             mp3File.setId3v2Tag(guessedId3Tag);
 
@@ -82,8 +86,6 @@ public class Mp3ReTagger {
         if (parts.length == 2) {
             String artist = parts[0];
             String title = parts[1];
-
-            System.out.println("Guessed artist: " + artist + "  title: " + title);
 
             ID3v23Tag id3v23Tag = new ID3v23Tag();
             id3v23Tag.setArtist(artist);
