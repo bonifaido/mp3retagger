@@ -30,16 +30,16 @@ public class Mp3ReTagger {
         }
 
         Mp3File mp3File = new Mp3File(filePath);
-        ID3v23Tag guessedId3v23Tag = guessArtistTitle(file);
+        ID3v23Tag guessedId3Tag = guessArtistAndTitle(file);
 
-        if (guessedId3v23Tag != null) {
-            if (!needsReTagging(mp3File, guessedId3v23Tag)) {
+        if (guessedId3Tag != null) {
+            if (!needsReTagging(mp3File, guessedId3Tag)) {
                 System.out.println("ID3 is up-to-date");
                 return;
             }
 
             mp3File.removeId3v1Tag();
-            mp3File.setId3v2Tag(guessedId3v23Tag);
+            mp3File.setId3v2Tag(guessedId3Tag);
 
             String tmpFileName = filePath + RETAGGED;
             mp3File.save(tmpFileName);
@@ -73,7 +73,7 @@ public class Mp3ReTagger {
         return s == null || s.length() == 0;
     }
 
-    static ID3v23Tag guessArtistTitle(File file) {
+    static ID3v23Tag guessArtistAndTitle(File file) {
         String name = file.getName();
         name = name.substring(0, name.length() - 4);
 
